@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["bjud"]
+
+[project]
+name = "bjud"
+version = "0.0.1"
+authors = [
+  { name="Dag Heyman", email="dag.heyman@gmail.com" },
+]
+description = "small library for scraping facebook events"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["playwright"]
+
+[project.optional-dependencies]
+tests = ['pytest']
+
+[project.urls]
+"Homepage" = "https://github.com/dagheyman/bjud"
+"Bug Tracker" = "https://github.com/dagheyman/bjud/issues"

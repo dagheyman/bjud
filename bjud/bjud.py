@@ -37,6 +37,10 @@ class Bjud:
             except Exception as e:
                 pass
 
+            title = page.locator(
+                "//head/meta[contains(@property, 'og:title')]"
+            ).get_attribute("content")
+
             for l in page.locator("//body/script").all():
                 try:
                     d = json.loads(l.text_content())
@@ -48,7 +52,7 @@ class Bjud:
                     address = event["one_line_address"]
                     organiser = event["event_creator"]["name"]
                     return FbEvent(
-                        title="TODO",
+                        title=title,
                         description=description,
                         organiser=organiser,
                         address=address,

@@ -41,10 +41,13 @@ class Bjud:
                 "//head/meta[contains(@property, 'og:title')]"
             ).get_attribute("content")
 
+            if title == None:
+                raise ValueError('No title')
+
             for l in page.locator("//body/script").all():
                 try:
                     d = json.loads(l.text_content())
-                    event = d["require"][0][3][0]["__bbox"]["require"][7][3][1][
+                    event = d["require"][0][3][0]["__bbox"]["require"][9][3][1][
                         "__bbox"
                     ]["result"]["data"]["event"]
                     description = event["event_description"]["text"]
@@ -57,6 +60,8 @@ class Bjud:
                         organiser=organiser,
                         address=address,
                     )
+                    browser.close()
                 except Exception as e:
                     pass
-            browser.close()
+            raise ValueError('Loop failed')
+

@@ -9,6 +9,9 @@ class FbEvent:
     description: str
     organiser: str
     address: str
+    street_address: str
+    post_address: str
+    country: str
 
 
 class Bjud:
@@ -56,12 +59,18 @@ class Bjud:
                                 "city_page"
                             ]["name"]
                             address = event["one_line_address"]
+                            street_address = address.split(",")[0]
+                            post_address = address.split(",")[1]
+                            country = address.split(",")[2]
                             organiser = event["event_creator"]["name"]
                             return FbEvent(
                                 title=title,
                                 description=description,
                                 organiser=organiser,
                                 address=address,
+                                street_address=street_address,
+                                post_address=post_address.strip(),
+                                country=country.strip()
                             )
                         except Exception as e:
                             pass

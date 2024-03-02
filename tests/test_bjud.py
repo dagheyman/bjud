@@ -10,9 +10,9 @@ def test_get_event_norberg_online():
     assert e.street_address == "Gamla Banan 10"
     assert e.post_address == "SE-738 33 Norberg"
     assert e.country == "Sverige"
-    # TODO: fix timezones to pass in CI
-    # assert e.start_time.isoformat() == '2024-07-04T18:00:00'
-    # assert e.stop_time.isoformat() == '1970-01-01T01:00:00'
+    assert e.start_time.year == 2024
+    assert e.start_time.month == 7
+    assert e.start_time.day == 4
     assert "Experimental" in e.description
 
 

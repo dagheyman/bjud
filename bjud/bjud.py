@@ -64,12 +64,11 @@ class Bjud:
             for l in page.locator("//body/script").all():
                 try:
                     d = json.loads(l.text_content())
-                    start_time = d["require"][0][3][0]["__bbox"]["require"][1][3][1][
+                    data = d["require"][0][3][0]["__bbox"]["require"][1][3][1][
                         "__bbox"
-                    ]["result"]["data"]["start_timestamp"]
-                    stop_time = d["require"][0][3][0]["__bbox"]["require"][1][3][1][
-                        "__bbox"
-                    ]["result"]["data"]["end_timestamp"]
+                    ]["result"]["data"]
+                    start_time = data["start_timestamp"]
+                    stop_time = data["end_timestamp"]
                 except Exception as e:
                     pass
 

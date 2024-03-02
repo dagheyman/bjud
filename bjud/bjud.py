@@ -23,6 +23,17 @@ class Bjud:
         pass
 
     def get_event(self, url):
+
+        # Default values
+        title = ""
+        description = ""
+        organiser = ""
+        street_address = ""
+        post_address = ""
+        country = ""
+        start_time = None
+        stop_time = None
+
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page(locale="en-US")
@@ -70,13 +81,11 @@ class Bjud:
                         try:
                             event = c[3][1]["__bbox"]["result"]["data"]["event"]
                             description = event["event_description"]["text"]
-                            location = event["location"]["reverse_geocode"][
-                                "city_page"
-                            ]["name"]
                             address = event["one_line_address"]
-                            street_address = address.split(",")[0]
-                            post_address = address.split(",")[1]
-                            country = address.split(",")[2]
+                            if address:
+                                street_address = address.split(",")[0]
+                                post_address = address.split(",")[1]
+                                country = address.split(",")[2]
                             organiser = event["event_creator"]["name"]
                             return FbEvent(
                                 title=title,

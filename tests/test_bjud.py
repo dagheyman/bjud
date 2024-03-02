@@ -2,8 +2,7 @@ from datetime import datetime
 from bjud.bjud import Bjud
 
 
-
-def test_get_event():
+def test_get_event_norberg_online():
     bjud = Bjud()
     e = bjud.get_event("https://www.facebook.com/events/415842204239647/")
     assert e.title == "Norbergfestival 2024"
@@ -14,9 +13,17 @@ def test_get_event():
     # TODO: fix timezones to pass in CI
     # assert e.start_time.isoformat() == '2024-07-04T18:00:00'
     # assert e.stop_time.isoformat() == '1970-01-01T01:00:00'
-
     assert "Experimental" in e.description
 
+
+def test_get_event_tca_online():
+    bjud = Bjud()
     e = bjud.get_event("https://www.facebook.com/events/1828636217581951")
     assert "Take Concrete Action" in e.organiser
     assert e.street_address == "Tjärhovsgatan 46"
+
+
+def test_get_event_no_address_online():
+    bjud = Bjud()
+    e = bjud.get_event("https://www.facebook.com/events/1510012029929672")
+    assert e.title == "Manifestation: Stäng ner Elbit!"

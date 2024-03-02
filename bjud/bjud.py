@@ -1,4 +1,6 @@
 import json
+import datetime
+from datetime import datetime
 from dataclasses import dataclass
 from playwright.sync_api import sync_playwright
 
@@ -8,10 +10,11 @@ class FbEvent:
     title: str
     description: str
     organiser: str
-    address: str
     street_address: str
     post_address: str
     country: str
+    start_time: datetime
+    stop_time: datetime
 
 
 class Bjud:
@@ -50,6 +53,18 @@ class Bjud:
             for l in page.locator("//body/script").all():
                 try:
                     d = json.loads(l.text_content())
+                    start_time = d["require"][0][3][0]["__bbox"]["require"][1][3][1][
+                        "__bbox"
+                    ]["result"]["data"]["start_timestamp"]
+                    stop_time = d["require"][0][3][0]["__bbox"]["require"][1][3][1][
+                        "__bbox"
+                    ]["result"]["data"]["end_timestamp"]
+                except Exception as e:
+                    pass
+
+            for l in page.locator("//body/script").all():
+                try:
+                    d = json.loads(l.text_content())
                     candidates = d["require"][0][3][0]["__bbox"]["require"]
                     for c in candidates:
                         try:
@@ -67,10 +82,11 @@ class Bjud:
                                 title=title,
                                 description=description,
                                 organiser=organiser,
-                                address=address,
                                 street_address=street_address,
                                 post_address=post_address.strip(),
-                                country=country.strip()
+                                country=country.strip(),
+                                start_time=datetime.fromtimestamp(start_time),
+                                stop_time=datetime.fromtimestamp(stop_time),
                             )
                         except Exception as e:
                             pass

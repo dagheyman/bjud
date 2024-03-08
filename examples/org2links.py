@@ -1,8 +1,9 @@
 import sys
-from bjud.org import Org
+from bjud.bjud import Bjud
 
-org = Org()
-events = org.get_events(sys.argv[1])
+bjud = Bjud()
+
+events = bjud.get_event_links(sys.argv[1])
 
 for e in events:
-	print(e);
+    print(e)
